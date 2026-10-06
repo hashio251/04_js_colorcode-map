@@ -1,0 +1,16 @@
+body {
+  text-align: center;
+  font-family: sans-serif;
+  display: grid;
+  place-items: center; /* gridの時に縦横を一気に指定する */
+  height: 100vh;
+  background: #000;
+}
+
+div.colorPicker {
+  background: #fff;
+  padding: 2em;
+  border-radius: 240px 15px 100px 15px / 15px 200px 15px 185px;
+  width: 12.5em;
+  box-shadow: 0 0 1rem #ddd;
+}
