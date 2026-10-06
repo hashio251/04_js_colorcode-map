@@ -7,10 +7,23 @@ body {
   background: #000;
 }
 
-div.colorPicker {
+div.serch-box {
+  display: flex;
+}
+
+div.colorPicker, div.btn {
   background: #fff;
   padding: 2em;
   border-radius: 240px 15px 100px 15px / 15px 200px 15px 185px;
   width: 12.5em;
   box-shadow: 0 0 1rem #ddd;
+}
+
+div.btn {
+  margin-top: 4em;
+  padding: .5em 2em;
+  &
+  a {
+    color: black;
+  }
 }
