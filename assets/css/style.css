@@ -11,7 +11,7 @@ body {
   display: flex;
 } */
 
-div.colorPicker, div.btn {
+div.colorPicker, div.btn, .color-picker-box {
   background: #fff;
   padding: 2em;
   border-radius: 240px 15px 100px 15px / 15px 200px 15px 185px;
