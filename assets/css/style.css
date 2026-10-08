@@ -40,7 +40,7 @@ div > button.copy-btn {
 
 div.mix-btn > a {
   text-underline-offset: .5em;
-  text-decoration-thickness: .05em;
+  text-decoration-thickness: .03em;
 }
 
 /* /mix-color/index.html */
