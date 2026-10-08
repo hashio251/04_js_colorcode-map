@@ -27,6 +27,7 @@ div.mix-btn {
 }
 
 div.mix-btn {
+  margin: 5em auto;
   transition: transform .3s ease;
 }
 
@@ -56,10 +57,30 @@ div.color-box {
   gap: 3em;
 }
 
-div.circle {
-  width: 5em;
-  height: 5em;
+div.circle, div.back-btn {
+  width: 7em;
+  height: 7em;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 0 1rem #ddd;
+}
+
+div.back-btn {
+  margin: 5em auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform .3s ease;
+  &
+  a {
+    text-decoration: none;
+    color: #276ab7;
+    font-weight: 700;
+    font-size: 1.2em;
+    
+  }
+}
+
+div.back-btn:hover {
+  transform: scale(1.1) rotate(.9deg);
 }
