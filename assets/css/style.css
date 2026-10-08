@@ -7,11 +7,9 @@ body {
   background: #000;
 }
 
-/* div.serch-box {
-  display: flex;
-} */
 
-div.colorPicker, div.btn, .color-picker-box {
+
+div.colorPicker, div.mix-btn, .color-picker-box {
   background: #fff;
   padding: 2em;
   border-radius: 240px 15px 100px 15px / 15px 200px 15px 185px;
@@ -19,7 +17,7 @@ div.colorPicker, div.btn, .color-picker-box {
   box-shadow: 0 0 1rem #ddd;
 }
 
-div.btn {
+div.mix-btn {
   margin-top: 4em;
   padding: .5em 2em;
   &
@@ -28,6 +26,22 @@ div.btn {
   }
 }
 
+div.mix-btn {
+  transition: transform .3s ease;
+}
+
+div.mix-btn:hover {
+  transform: scale(1.05) rotate(.5deg);
+}
+
+div > button.copy-btn {
+  display: none;
+}
+
+div.mix-btn > a {
+  text-underline-offset: .5em;
+  text-decoration-thickness: .05em;
+}
 
 /* /mix-color/index.html */
 p.plus {
