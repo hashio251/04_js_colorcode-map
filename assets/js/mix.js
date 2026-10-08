@@ -5,7 +5,11 @@ const circles = document.querySelectorAll('.circle');
 const firstColor = document.querySelector('.first-color .color-picker');
 const secondColor = document.querySelector('.second-color .color-picker');
 
-const mixButton = document.querySelector('#mixColorBg');
+const mixButton = document.querySelector('.mix-btn');
+const mixColorButton = document.querySelector('#mixColorBg');
+const copyButton = document.querySelector('#copyButton');
+
+let mixedColor = '';
 
 
 colors.forEach((color, index) => {
@@ -42,26 +46,31 @@ const mixColorBg = () => {
   const g = Math.round((color1.g + color2.g) / 2);
   const b = Math.round((color1.b + color2.b) / 2);
 
-  const mixedColor = rgbToHex(r, g, b);
+  mixedColor = rgbToHex(r, g, b);
 
   document.body.style.backgroundColor = mixedColor;
+
+  // 色を混ぜてみるを混色結果で上書き
+  mixColorButton.textContent = `混ぜた色: ${mixedColor}`;
+
+  //コピーの文字を表示
+  copyButton.style.display = 'inline-block';
+  mixButton.style.padding = '2em';
 
   console.log(mixedColor);
 };
 
 
-if (mixButton) {
-  mixButton.addEventListener('click', mixColorBg);
+// 色を混ぜる処理
+if (mixColorButton) {
+  mixColorButton.addEventListener('click', mixColorBg);
 }
 
 
-const mainColorPicker = document.querySelector('#colorPicker');
-const mainColorText = document.querySelector('#colorText');
-
-if (mainColorPicker) {
-  mainColorPicker.addEventListener('input', () => {
-    document.body.style.backgroundColor = mainColorPicker.value;
-    mainColorText.textContent =
-      `カラーコード : ${mainColorPicker.value}`;
-  });
+// コピーの処理
+if (copyButton) {
+  copyButton.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(mixedColor);
+    alert('コピーしました！');
+  })
 }

@@ -12,7 +12,7 @@ if (mainColorPicker) {
   });
 }
 
-
+// 出力されたカラーコードをコピーする
 if (copyButton) {
   copyButton.addEventListener('click', async () => {
     await navigator.clipboard.writeText(mainColorPicker.value);
