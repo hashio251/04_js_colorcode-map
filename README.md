@@ -1,9 +1,8 @@
 # Color Picker
 
-JavaScriptのDOM操作やイベント処理を学習するために制作した、
-カラーコードを確認・コピーできるカラーピッカーです。
+JavaScriptのDOM操作やイベント処理を学習するために制作した、カラーコードを確認できるカラーピッカーです。
 
-2色を選択して、その中間色を作成するMix Color機能も追加しています。
+選択した色のカラーコード表示・コピーに加えて、2色から中間色を作成する **Mix Color** 機能を実装しています。
 
 ---
 
@@ -17,24 +16,22 @@ https://hashio251.github.io/04_js_colorcode-map/index.html
 
 ### Color Picker
 
-カラーピッカーから色を選択すると、以下の処理を行います。
+カラーピッカーから色を選択すると、選択した色をページに反映します。
 
-- カラーコードを表示
-- ページ背景色を選択した色に変更
+- 選択したカラーコードを表示
+- ページの背景色を選択した色に変更
 - カラーコードをクリップボードへコピー
-
----
 
 ### Mix Color
 
-2つのカラーを選択し、それぞれのRGB値の中間値を計算することで、
-2色を混ぜたカラーを作成できます。
+2つの色を選択し、それぞれのRGB値の平均を計算することで中間色を作成します。
 
-混色後は、以下の処理を行います。
-
-- 混ぜた色をページ背景に表示
-- 混色後のカラーコードを表示
-- 混色したカラーコードをクリップボードへコピー
+- 2つのカラーを選択
+- HEXからRGBへ変換
+- RGBそれぞれの平均値を計算
+- 計算結果をHEXへ再変換
+- 混色結果をページ背景に反映
+- 混色後のカラーコードをコピー
 
 ---
 
@@ -42,15 +39,9 @@ https://hashio251.github.io/04_js_colorcode-map/index.html
 
 ### Color Picker
 
-`input` イベントを使用して、
-カラーピッカーの値が変更されたタイミングでカラーコードを取得しています。
+`input` イベントを使用して、カラーピッカーの値が変更されたタイミングでカラーコードを取得しています。
 
-取得した値を使用して、
-
-- `textContent` によるカラーコード表示
-- `style.backgroundColor` による背景色変更
-
-を行っています。
+取得した値を `textContent` と `style.backgroundColor` に反映することで、カラーコードと背景色を変更しています。
 
 ```javascript
 mainColorPicker.addEventListener('input', () => {
@@ -61,8 +52,7 @@ mainColorPicker.addEventListener('input', () => {
 });
 ```
 
-また、Clipboard APIを使用して、
-表示したカラーコードをコピーできるようにしています。
+また、Clipboard APIを使用して、選択したカラーコードをクリップボードへコピーできるようにしています。
 
 ```javascript
 copyButton.addEventListener('click', async () => {
@@ -76,8 +66,7 @@ copyButton.addEventListener('click', async () => {
 
 ## Mix Color Logic
 
-Mix Colorでは、
-HEX形式のカラーコードを一度RGBへ変換しています。
+Mix Colorでは、HEX形式のカラーコードをRGBへ変換し、2色のRGB値から中間値を求めています。
 
 ```text
 Color A
@@ -101,9 +90,11 @@ RGBそれぞれの平均値を計算
 Mixed Color
 ```
 
-HEXからRGBへの変換は、
-カラーコードを2桁ずつ分割し、
-16進数から10進数へ変換しています。
+### 1. HEX → RGB
+
+カラーコードから `#` を取り除き、RGBそれぞれの値を2桁ずつ取得します。
+
+`parseInt()` を使用して16進数から10進数へ変換しています。
 
 ```javascript
 const hexToRgb = (hex) => {
@@ -117,8 +108,9 @@ const hexToRgb = (hex) => {
 };
 ```
 
-2色のRGB値を取得した後、
-それぞれの平均を計算しています。
+### 2. RGBの平均値を計算
+
+2色のRGB値を取得し、それぞれの平均値を計算します。
 
 ```javascript
 const r = Math.round((color1.r + color2.r) / 2);
@@ -126,8 +118,9 @@ const g = Math.round((color1.g + color2.g) / 2);
 const b = Math.round((color1.b + color2.b) / 2);
 ```
 
-最後にRGB値を再びHEX形式へ変換し、
-混色結果として表示しています。
+### 3. RGB → HEX
+
+計算したRGB値を16進数へ変換し、再びHEX形式のカラーコードを作成します。
 
 ```javascript
 const rgbToHex = (r, g, b) => {
@@ -139,20 +132,43 @@ const rgbToHex = (r, g, b) => {
 
 ---
 
-## JavaScript
+## Original Additions
 
-この制作では、主に以下のJavaScriptを使用しました。
+書籍で学習した内容をベースに、学んだJavaScriptを実際に使ってみるため、機能の追加・拡張を行いました。
+
+- カラーコードのコピー機能
+- Mix Colorページの追加
+- HEX / RGBの変換処理
+- 2色のRGB値から中間色を計算する処理
+- 混色したカラーコードの表示
+- 混色したカラーコードのコピー機能
+- 選択色・混色結果に応じた背景色の変更
+
+---
+
+## What I Learned
+
+この制作を通して、JavaScriptによるDOM操作の基本的な流れを学習しました。
+
+```text
+HTML要素を取得
+↓
+イベントを監視
+↓
+JavaScriptで処理
+↓
+DOM / CSSへ反映
+```
+
+主に使用したJavaScriptの機能・APIは以下です。
 
 - `document.querySelector()`
 - `document.querySelectorAll()`
 - `addEventListener()`
 - `forEach()`
-- DOM操作
 - `textContent`
 - `style.backgroundColor`
-- 関数
 - アロー関数
-- 配列
 - `map()`
 - `join()`
 - `parseInt()`
@@ -160,63 +176,15 @@ const rgbToHex = (r, g, b) => {
 - `padStart()`
 - `navigator.clipboard.writeText()`
 
----
-
-## What I learned
-
-この制作を通して、
-HTMLの要素をJavaScriptから取得し、
-ユーザーの操作に応じて表示を変更するDOM操作について学習しました。
-
-特に、
-
-```javascript
-document.querySelector()
-```
-
-や、
-
-```javascript
-addEventListener()
-```
-
-を使用することで、
-
-```text
-HTMLの要素を取得
-↓
-イベントを監視
-↓
-JavaScriptでHTMLやCSSを変更
-```
-
-という基本的な流れを理解することができました。
-
-また、Mix Color機能を追加することで、
-単純なDOM操作だけではなく、
-
-- HEXとRGBの変換
-- 数値計算
-- 関数への処理分割
-- 複数要素の取得と操作
-- 配列処理
-
-についても学習しました。
+Mix Color機能の制作では、DOM操作だけでなく、HEXとRGBの変換や配列処理、関数への処理分割についても学習しました。
 
 ---
 
-## Original additions
+## Design
 
-JavaScriptの学習内容をもとに、
-以下の機能を追加・実装しました。
+ヘッダー画像は **Adobe Photoshop** を使用して制作しました。
 
-- 選択したカラーコードのコピー機能
-- Mix Colorページの追加
-- 2色のRGB値から中間色を計算する処理
-- 混色したカラーコードの表示
-- 混色したカラーコードのコピー機能
-- 選択色に合わせた背景色の変更
-- 混色結果に合わせた背景色の変更
+カラーピッカーによってページの背景色が変化するため、どの背景色でもヘッダー画像を表示できるよう、背景を透過したPNG画像として作成しています。
 
 ---
 
@@ -225,22 +193,17 @@ JavaScriptの学習内容をもとに、
 ```text
 04_js_colorcode-map/
 ├── index.html
-│
 ├── mix-color/
 │   └── index.html
-│
 ├── assets/
 │   ├── css/
 │   │   └── style.css
-│   │
 │   ├── js/
 │   │   ├── main.js
 │   │   └── mix.js
-│   │
 │   └── images/
 │       └── parts/
 │           └── header.png
-│
 └── README.md
 ```
 
@@ -251,6 +214,7 @@ JavaScriptの学習内容をもとに、
 - HTML
 - CSS
 - JavaScript
+- Adobe Photoshop
 - Git
 - GitHub
 - GitHub Pages
@@ -259,38 +223,10 @@ JavaScriptの学習内容をもとに、
 
 ## Reference
 
-JavaScriptの学習・制作の参考として、
-以下の書籍を使用しました。
+JavaScriptの学習・制作の参考として、以下の書籍を使用しました。
 
 **Mana 著  
 『1冊ですべて身につくJavaScript入門講座』  
 SBクリエイティブ**
 
-書籍を参考にJavaScriptの基本やDOM操作、
-イベント処理について学習しながら制作しました。
-
-その後、学習した内容をもとに、
-カラーコードのコピー機能やMix Color機能などを追加し、
-自分で機能の拡張を行っています。
-
----
-
-## About this project
-
-この作品は、
-JavaScriptのDOM操作を実際に動かしながら理解することを目的として制作しました。
-
-色を選択することで画面が変化するという
-視覚的に結果が分かりやすい題材を使用することで、
-
-```text
-取得
-↓
-イベント
-↓
-処理
-↓
-画面へ反映
-```
-
-というJavaScriptの基本的な流れを確認できる作品にしています。
+書籍を参考にJavaScriptの基本やDOM操作、イベント処理を学習し、その内容をもとに機能の追加・拡張を行いました。
