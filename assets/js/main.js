@@ -9,6 +9,7 @@ if (mainColorPicker) {
     mainColorText.textContent =
       `カラーコード : ${mainColorPicker.value}`;
       copyButton.style.display = 'inline-block';
+      copyButton.style.marginTop = '1.5em';
   });
 }
 
